@@ -1,0 +1,934 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Efectos\_Mixtos\_Ej5\_ejercicios\_mixtospdf}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{efectos-mixtos---ej5---ejercicios_mixtos.pdf}{%
+\section{Efectos Mixtos - Ej5 -
+ejercicios\_mixtos.pdf}\label{efectos-mixtos---ej5---ejercicios_mixtos.pdf}}
+
+Mismo ejercicio pero para tratar como si fuesen:
+
+\begin{itemize}
+\tightlist
+\item
+  2 factores fijos
+\item
+  1 fijo y 1 aleatorio
+\item
+  2 aleatorios
+\end{itemize}
+
+Lectura de datos y conversión a factor:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} datos \PY{o}{=} read.csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{datos/ej5\PYZus{}ejercicios\PYZus{}mixtos.csv\PYZdq{}}\PY{p}{,} sep\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{;\PYZdq{}}\PY{p}{)}
+        str\PY{p}{(}datos\PY{p}{)}
+        \PY{k+kn}{attach}\PY{p}{(}datos\PY{p}{)}
+        velocidadf \PY{o}{=} \PY{k+kp}{as.factor}\PY{p}{(}velocidad\PY{p}{)}
+        alimentacionf \PY{o}{=} \PY{k+kp}{as.factor}\PY{p}{(}alimentacion\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+'data.frame':	16 obs. of  3 variables:
+ \$ fuerza      : num  2.7 2.78 2.83 2.86 2.45 2.49 2.85 2.8 2.6 2.72 {\ldots}
+ \$ velocidad   : int  125 125 200 200 125 125 200 200 125 125 {\ldots}
+ \$ alimentacion: num  0.015 0.015 0.015 0.015 0.03 0.03 0.03 0.03 0.045 0.045 {\ldots}
+
+    \end{Verbatim}
+
+    \hypertarget{modelos}{%
+\subsection{Modelos}\label{modelos}}
+
+\hypertarget{modelo-2-efectos-fijos}{%
+\subsubsection{Modelo: 2 efectos fijos}\label{modelo-2-efectos-fijos}}
+
+\begin{itemize}
+\tightlist
+\item
+  \(\alpha\) (i): velocidad
+\item
+  \(\beta\) (j): alimentacion
+\end{itemize}
+
+\[y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}\]
+
+    \textbf{Gráficos exploratorios}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} interaction.plot\PY{p}{(}velocidadf\PY{p}{,} alimentacionf\PY{p}{,} fuerza\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_4_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} interaction.plot\PY{p}{(}alimentacionf\PY{p}{,} velocidadf\PY{p}{,} fuerza\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    De los gráficos podemos inferir que la existe una interacción pero no
+parece ser muy significativa (interacción leve).
+
+A continuación hacemos la tabla anova para analizar numéricamente si son
+significativos los factores y su combinación:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} m1 \PY{o}{=} aov\PY{p}{(}fuerza\PY{o}{\PYZti{}}velocidadf\PY{o}{*}alimentacionf\PY{p}{)}
+        \PY{k+kp}{summary}\PY{p}{(}m1\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+                         Df  Sum Sq Mean Sq F value   Pr(>F)    
+velocidadf                1 0.14823 0.14823  57.010 6.61e-05 ***
+alimentacionf             3 0.09250 0.03083  11.859  0.00258 ** 
+velocidadf:alimentacionf  3 0.04187 0.01396   5.369  0.02557 *  
+Residuals                 8 0.02080 0.00260                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+    \end{verbatim}
+
+    
+    Vemos que son significativas tanto la interacción de la velocidad con la
+alimentación como cada factor individualmente.
+
+Ahora veamos si se cumplen los \textbf{supuestos de normalidad y
+igualdad de varianzas}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} qqnorm\PY{p}{(}m1\PY{o}{\PYZdl{}}residuals\PY{p}{)}
+         qqline\PY{p}{(}m1\PY{o}{\PYZdl{}}residuals\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} shapiro.test\PY{p}{(}m1\PY{o}{\PYZdl{}}residuals\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  m1$residuals
+W = 0.96815, p-value = 0.8078
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k+kn}{library}\PY{p}{(}car\PY{p}{)}
+        leveneTest\PY{p}{(}m1\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Loading required package: carData
+Warning message in anova.lm(lm(resp \textasciitilde{} group)):
+“ANOVA F-tests on an essentially perfect fit are unreliable”
+    \end{Verbatim}
+
+    \begin{tabular}{r|lll}
+  & Df & F value & Pr(>F)\\
+\hline
+	group & 7             & 1.030707e+28  & 3.546276e-111\\
+	  & 8             &           NA  &            NA\\
+\end{tabular}
+
+
+    
+    Vemos que el test de levene no es confiable debido a que son muy pocas
+observaciones, aún así debemos elegir si intentar hacer una
+transformación para ver si mejora. Analizamos el gráfico de BoxCox,
+corroborando si el 1 se encuentra en la banda de confianza.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k+kn}{library}\PY{p}{(}MASS\PY{p}{)}
+        boxcox\PY{p}{(}m1\PY{p}{,} lambda \PY{o}{=} \PY{k+kp}{seq}\PY{p}{(}\PY{l+m}{\PYZhy{}10}\PY{p}{,} \PY{l+m}{20}\PY{p}{,} \PY{l+m}{1}\PY{o}{/}\PY{l+m}{10}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+     ¿Por qué la banda de confianza nos da tan amplia, está bien esto? ¿La
+transformación de BOXCOX se utiliza cuando al menos alguno de los
+supuestos no se cumplen (varianza constante o normalidad)?
+
+Como es significativa la interacción entre los factores fijos, no
+podemos analizarlos en forma independiente, de aquí que no tiene sentido
+ver un gráfico boxplot tomando los factores separados.
+
+Debido a esta razón creamos un factor que sea la combinación de ambos
+para luego sí hacer comparaciones múltiples usando el método de Tukey
+que compara todos contra todos.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} fav \PY{o}{=} \PY{k+kp}{factor}\PY{p}{(}\PY{k+kp}{paste0}\PY{p}{(}alimentacionf\PY{p}{,}velocidadf\PY{p}{)}\PY{p}{)}
+         \PY{k+kn}{library}\PY{p}{(}multcomp\PY{p}{)}
+         modelo \PY{o}{=} aov\PY{p}{(}fuerza\PY{o}{\PYZti{}}fav\PY{p}{)}
+         mc \PY{o}{=} glht\PY{p}{(}modelo\PY{p}{,} linfct \PY{o}{=} mcp\PY{p}{(}fav\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Tukey\PYZdq{}}\PY{p}{)}\PY{p}{)}
+         plot\PY{p}{(}mc\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{} Esto para ver las comparaciones que hace ya que no se ve en la gráfica}
+         \PY{k+kp}{print}\PY{p}{(}mc\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+	 General Linear Hypotheses
+
+Multiple Comparisons of Means: Tukey Contrasts
+
+
+Linear Hypotheses:
+                         Estimate
+0.015200 - 0.015125 == 0    0.105
+0.03125 - 0.015125 == 0    -0.270
+0.03200 - 0.015125 == 0     0.085
+0.045125 - 0.015125 == 0   -0.080
+0.045200 - 0.015125 == 0    0.125
+0.06125 - 0.015125 == 0     0.065
+0.06200 - 0.015125 == 0     0.170
+0.03125 - 0.015200 == 0    -0.375
+0.03200 - 0.015200 == 0    -0.020
+0.045125 - 0.015200 == 0   -0.185
+0.045200 - 0.015200 == 0    0.020
+0.06125 - 0.015200 == 0    -0.040
+0.06200 - 0.015200 == 0     0.065
+0.03200 - 0.03125 == 0      0.355
+0.045125 - 0.03125 == 0     0.190
+0.045200 - 0.03125 == 0     0.395
+0.06125 - 0.03125 == 0      0.335
+0.06200 - 0.03125 == 0      0.440
+0.045125 - 0.03200 == 0    -0.165
+0.045200 - 0.03200 == 0     0.040
+0.06125 - 0.03200 == 0     -0.020
+0.06200 - 0.03200 == 0      0.085
+0.045200 - 0.045125 == 0    0.205
+0.06125 - 0.045125 == 0     0.145
+0.06200 - 0.045125 == 0     0.250
+0.06125 - 0.045200 == 0    -0.060
+0.06200 - 0.045200 == 0     0.045
+0.06200 - 0.06125 == 0      0.105
+
+
+    \end{Verbatim}
+
+    Como el factor \emph{rapidez de la alimentación} es cuantitativo podemos
+realizar un análisis de tendencia, del siguiente modo:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} g \PY{o}{=} \PY{l+m}{4}
+         contrasts\PY{p}{(}alimentacionf\PY{p}{)} \PY{o}{=} contr.poly\PY{p}{(}g\PY{p}{,} scores \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.015}\PY{p}{,} \PY{l+m}{0.030}\PY{p}{,} \PY{l+m}{0.045}\PY{p}{,} \PY{l+m}{0.060}\PY{p}{)}\PY{p}{)} 
+         modelot \PY{o}{=} aov\PY{p}{(}fuerza\PY{o}{\PYZti{}}velocidadf\PY{o}{*}alimentacionf\PY{p}{)}
+         summary.lm\PY{p}{(}modelot\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+Call:
+aov(formula = fuerza ~ velocidadf * alimentacionf)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.06000 -0.02625  0.00000  0.02625  0.06000 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                    2.66875    0.01803 148.036 4.85e-15 ***
+velocidadf200                  0.19250    0.02550   7.550 6.61e-05 ***
+alimentacionf.L                0.08609    0.03606   2.388 0.044016 *  
+alimentacionf.Q                0.20750    0.03606   5.755 0.000427 ***
+alimentacionf.C               -0.11292    0.03606  -3.132 0.013976 *  
+velocidadf200:alimentacionf.L -0.03354    0.05099  -0.658 0.529140    
+velocidadf200:alimentacionf.Q -0.17500    0.05099  -3.432 0.008928 ** 
+velocidadf200:alimentacionf.C  0.10062    0.05099   1.973 0.083904 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.05099 on 8 degrees of freedom
+Multiple R-squared:  0.9314,	Adjusted R-squared:  0.8715 
+F-statistic: 15.53 on 7 and 8 DF,  p-value: 0.0004502
+
+    \end{verbatim}
+
+    
+    Calculamos un \textbf{nuevo \(\alpha\)} para comparar, usando Bonferroni
+\(\alpha_{PC} = 1 - (1- \alpha_{0QueQuiero})^{1/7}\), donde
+\(\alpha_{0QueQuiero} = 0.05\). Según este nuevo \(\alpha\) veremos las
+relaciones donde \(pvalor<0.0073\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} cant\PYZus{}comp \PY{o}{=} \PY{l+m}{7}
+         alpha \PY{o}{=} \PY{l+m}{0.05}
+         \PY{p}{(}alpha\PYZus{}PC \PY{o}{=} \PY{l+m}{1} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}} alpha\PY{p}{)}\PY{o}{\PYZca{}}\PY{p}{(}\PY{l+m}{1}\PY{o}{/}cant\PYZus{}comp\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.00730083197901465
+
+    
+     Vemos que el único pvalor inferior al nuevo \(\alpha\) es el
+correspondiente a alimentacionf.Q, ¿Esta bien esto? ¿por qué no nos
+aparece ningún pvalor inferior al nuevo \(\alpha\) en las interacciones?
+
+    \hypertarget{modelo-1-efecto-fijo-y-1-aleatorio}{%
+\subsubsection{Modelo: 1 efecto fijo y 1
+aleatorio}\label{modelo-1-efecto-fijo-y-1-aleatorio}}
+
+\hypertarget{velocidad-fija-y-alimentaciuxf3n-aleatorio}{%
+\paragraph{Velocidad (fija) y alimentación
+(aleatorio)}\label{velocidad-fija-y-alimentaciuxf3n-aleatorio}}
+
+\begin{itemize}
+\tightlist
+\item
+  \(\alpha\) (i): velocidad
+\item
+  \(B\) (j): alimentacion
+\end{itemize}
+
+\[y_{ijk} = \mu + \alpha_i + B_j + (\alpha B)_{ij} + \epsilon_{ijk}\]
+
+Veamos un gráfico exploratorio boxplot:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} boxplot\PY{p}{(}fuerza\PY{o}{\PYZti{}}velocidadf\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k+kn}{library}\PY{p}{(}lme4\PY{p}{)}
+         m2 \PY{o}{=} lmer\PY{p}{(}fuerza\PY{o}{\PYZti{}}velocidadf \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}alimentacionf\PY{p}{)} 
+                   \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{o}{:}alimentacionf\PY{p}{)}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}m2\PY{p}{)}
+         confint\PY{p}{(}m2\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Loading required package: Matrix
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+Linear mixed model fit by REML ['lmerMod']
+Formula: 
+fuerza ~ velocidadf + (1 | alimentacionf) + (1 | velocidadf:alimentacionf)
+
+REML criterion at convergence: -27
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.20366 -0.58317 -0.08913  0.58432  1.39143 
+
+Random effects:
+ Groups                   Name        Variance Std.Dev.
+ velocidadf:alimentacionf (Intercept) 0.005679 0.07536 
+ alimentacionf            (Intercept) 0.004219 0.06495 
+ Residual                             0.002600 0.05099 
+Number of obs: 16, groups:  velocidadf:alimentacionf, 8; alimentacionf, 4
+
+Fixed effects:
+              Estimate Std. Error t value
+(Intercept)    2.66875    0.05291  50.439
+velocidadf200  0.19250    0.05907   3.259
+
+Correlation of Fixed Effects:
+            (Intr)
+velocddf200 -0.558
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Computing profile confidence intervals {\ldots}
+
+    \end{Verbatim}
+
+    \begin{tabular}{r|ll}
+  & 2.5 \% & 97.5 \%\\
+\hline
+	.sig01 & 0.00000000 & 0.15118683\\
+	.sig02 & 0.00000000 & 0.17951358\\
+	.sigma & 0.03345319 & 0.09151009\\
+	(Intercept) & 2.56318754 & 2.77431245\\
+	velocidadf200 & 0.06343907 & 0.32155936\\
+\end{tabular}
+
+
+    
+    Vemos que tanto la interacción de velocidad y alimentación como la
+alimentación no tienen efecto significativo ya que los IC tienen el cero
+en su límite inferior. De esto modo ahora corroboraremos si el factor
+fijo tiene efecto significativo comparando con un test el modelo
+completo contra uno reducido.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} mcompleto \PY{o}{=} lmer\PY{p}{(}fuerza\PY{o}{\PYZti{}}velocidadf \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}alimentacionf\PY{p}{)} 
+                          \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{o}{:}alimentacionf\PY{p}{)}\PY{p}{,} REML \PY{o}{=} \PY{k+kc}{FALSE}\PY{p}{)}
+         mreducido \PY{o}{=} lmer\PY{p}{(}fuerza\PY{o}{\PYZti{}}\PY{l+m}{1} \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}alimentacionf\PY{p}{)} 
+                          \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{o}{:}alimentacionf\PY{p}{)}\PY{p}{,} REML \PY{o}{=} \PY{k+kc}{FALSE}\PY{p}{)}
+         anova\PY{p}{(}mcompleto\PY{p}{,} mreducido\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|llllllll}
+  & Df & AIC & BIC & logLik & deviance & Chisq & Chi Df & Pr(>Chisq)\\
+\hline
+	mreducido & 4          & -20.95723  & -17.86688  & 14.47862   & -28.95723  &       NA   & NA         &         NA\\
+	mcompleto & 5          & -25.51672  & -21.65378  & 17.75836   & -35.51672  & 6.559492   &  1         & 0.01043262\\
+\end{tabular}
+
+
+    
+    Como vemos un pvalor es chico (\textless{}0.05) podemos rechazar la H0,
+pero, el test anova usa una distribución chi2 para construir el pvalor
+que podría darnos mal porque es aproximada, esto es bueno cuando tenemos
+un n grande, sino no es muy confiable. ¿Puedo hacer algo mejor? usamos
+esta otra lib
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k+kn}{library}\PY{p}{(}pbkrtest\PY{p}{)}
+         KRmodcomp\PY{p}{(}mcompleto\PY{p}{,}mreducido\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+F-test with Kenward-Roger approximation; computing time: 0.06 sec.
+large : fuerza ~ velocidadf + (1 | alimentacionf) + (1 | velocidadf:alimentacionf)
+small : fuerza ~ 1 + (1 | alimentacionf) + (1 | velocidadf:alimentacionf)
+        stat    ndf    ddf F.scaling p.value  
+Ftest 10.619  1.000  3.000         1 0.04718 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+    \end{verbatim}
+
+    
+    Vemos que con este método volvemos a obtener un pvalor menor a la
+significancia por lo que no contradice el test anova previo, así que
+corroboramos que ambos modelos no son equivalentes por lo concluímos que
+el efecto fijo de la velocidad es significativo.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} mc2 \PY{o}{=} glht\PY{p}{(}mcompleto\PY{p}{,} linfct\PY{o}{=}mcp\PY{p}{(}velocidadf\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Tukey\PYZdq{}}\PY{p}{)}\PY{p}{)}
+         plot\PY{p}{(}mc2\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Podemos concluir que no son estadísticamente equivalentes los dos tipos
+de velocidades. Veamos qué sucede teniendo en cuenta el siguiente
+modelo, que intercambia el factor fijo con el aleatorio:
+
+\hypertarget{alimentaciuxf3n-fija-y-velocidad-aleatorio}{%
+\paragraph{Alimentación (fija) y velocidad
+(aleatorio)}\label{alimentaciuxf3n-fija-y-velocidad-aleatorio}}
+
+\begin{itemize}
+\tightlist
+\item
+  \(A\) (i): velocidad
+\item
+  \(\beta\) (j): alimentacion
+\end{itemize}
+
+\[y_{ijk} = \mu + A_i + \beta_j + (A \beta)_{ij} + \epsilon_{ijk}\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} m3 \PY{o}{=} lmer\PY{p}{(}fuerza\PY{o}{\PYZti{}}alimentacionf \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{p}{)} 
+                   \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{o}{:}alimentacionf\PY{p}{)}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}m3\PY{p}{)}
+         confint\PY{p}{(}m3\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Linear mixed model fit by REML ['lmerMod']
+Formula: 
+fuerza ~ alimentacionf + (1 | velocidadf) + (1 | velocidadf:alimentacionf)
+
+REML criterion at convergence: -22.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.2326 -0.6721  0.0101  0.5513  1.2053 
+
+Random effects:
+ Groups                   Name        Variance Std.Dev.
+ velocidadf:alimentacionf (Intercept) 0.005679 0.07536 
+ velocidadf               (Intercept) 0.016783 0.12955 
+ Residual                             0.002600 0.05099 
+Number of obs: 16, groups:  velocidadf:alimentacionf, 8; velocidadf, 2
+
+Fixed effects:
+                   Estimate Std. Error t value
+(Intercept)         2.79250    0.10900  25.619
+alimentacionf0.03  -0.14500    0.08354  -1.736
+alimentacionf0.045 -0.03000    0.08354  -0.359
+alimentacionf0.06   0.06500    0.08354   0.778
+
+Correlation of Fixed Effects:
+            (Intr) al0.03 a0.045
+almntcn0.03 -0.383              
+almntc0.045 -0.383  0.500       
+almntcn0.06 -0.383  0.500  0.500
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Computing profile confidence intervals {\ldots}
+
+    \end{Verbatim}
+
+    \begin{tabular}{r|ll}
+  & 2.5 \% & 97.5 \%\\
+\hline
+	.sig01 &  0.00000000  &  0.112976825\\
+	.sig02 &  0.02794357  &  0.401805671\\
+	.sigma &  0.03345351  &  0.090804080\\
+	(Intercept) &  2.55536607  &  3.029633995\\
+	alimentacionf0.03 & -0.28203922  & -0.007960855\\
+	alimentacionf0.045 & -0.16703922  &  0.107039145\\
+	alimentacionf0.06 & -0.07203922  &  0.202039145\\
+\end{tabular}
+
+
+    
+    Con este modelo vemos nuevamente que la interacción entre la velocidad y
+la alimentación no es significativa ya que incluye el 0 en el IC, no así
+la velocidad. Hacemos ahora la comparación entre este modelo completo y
+sin tener en cuenta el factor fijo:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} mcompleto2 \PY{o}{=} lmer\PY{p}{(}fuerza\PY{o}{\PYZti{}}alimentacionf \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{p}{)} 
+                           \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{o}{:}alimentacionf\PY{p}{)}\PY{p}{,} REML\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+         mreducido2 \PY{o}{=} lmer\PY{p}{(}fuerza\PY{o}{\PYZti{}}\PY{l+m}{1} \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{p}{)} 
+                           \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{o}{:}alimentacionf\PY{p}{)}\PY{p}{,} REML\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+         anova\PY{p}{(}mcompleto2\PY{p}{,} mreducido2\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|llllllll}
+  & Df & AIC & BIC & logLik & deviance & Chisq & Chi Df & Pr(>Chisq)\\
+\hline
+	mreducido2 & 4          & -22.20954  & -19.11919  & 15.10477   & -30.20954  &       NA   & NA         &         NA\\
+	mcompleto2 & 7          & -23.20521  & -17.79709  & 18.60261   & -37.20521  & 6.995672   &  3         & 0.07203583\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{k+kn}{library}\PY{p}{(}pbkrtest\PY{p}{)}
+         KRmodcomp\PY{p}{(}mcompleto2\PY{p}{,}mreducido2\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+F-test with Kenward-Roger approximation; computing time: 0.07 sec.
+large : fuerza ~ alimentacionf + (1 | velocidadf) + (1 | velocidadf:alimentacionf)
+small : fuerza ~ 1 + (1 | velocidadf) + (1 | velocidadf:alimentacionf)
+       stat   ndf   ddf F.scaling p.value
+Ftest 2.209 3.000 3.000         1   0.266
+    \end{verbatim}
+
+    
+    Vemos tanto en el test de \texttt{anova} como en \texttt{KRmodcomp}
+obtenemos un pvalor mayor que la significancia por lo que aceptamos la
+hipótesis nula (H0), a partir de esto concluímos que el factor fijo
+rapidez de alimentación no tiene efecto significativo.
+
+    \hypertarget{modelo-2-aleatorios}{%
+\subsubsection{Modelo: 2 aleatorios}\label{modelo-2-aleatorios}}
+
+\begin{itemize}
+\tightlist
+\item
+  \(A\) (i): velocidad
+\item
+  \(B\) (j): alimentacion
+\end{itemize}
+
+\[y_{ijk} = \mu + A_i + B_j + (A B)_{ij} + \epsilon_{ijk}\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} m4 \PY{o}{=} lmer\PY{p}{(}fuerza\PY{o}{\PYZti{}}\PY{l+m}{1} \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}alimentacionf\PY{p}{)} 
+                   \PY{o}{+} \PY{p}{(}\PY{l+m}{1}\PY{o}{|}velocidadf\PY{o}{:}alimentacionf\PY{p}{)}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}m4\PY{p}{)}
+         confint\PY{p}{(}m4\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Linear mixed model fit by REML ['lmerMod']
+Formula: 
+fuerza ~ 1 + (1 | velocidadf) + (1 | alimentacionf) + (1 | velocidadf:alimentacionf)
+
+REML criterion at convergence: -27.4
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.23677 -0.57463 -0.08913  0.61743  1.35832 
+
+Random effects:
+ Groups                   Name        Variance Std.Dev.
+ velocidadf:alimentacionf (Intercept) 0.005679 0.07536 
+ alimentacionf            (Intercept) 0.004219 0.06495 
+ velocidadf               (Intercept) 0.016783 0.12955 
+ Residual                             0.002600 0.05099 
+Number of obs: 16, groups:  
+velocidadf:alimentacionf, 8; alimentacionf, 4; velocidadf, 2
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   2.7650     0.1016   27.22
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Computing profile confidence intervals {\ldots}
+
+    \end{Verbatim}
+
+    \begin{tabular}{r|ll}
+  & 2.5 \% & 97.5 \%\\
+\hline
+	.sig01 & 0.00000000 & 0.20209025\\
+	.sig02 & 0.00000000 & 0.20942313\\
+	.sig03 & 0.00000000 & 0.41893756\\
+	.sigma & 0.03345319 & 0.09151536\\
+	(Intercept) & 2.51874193 & 3.01125937\\
+\end{tabular}
+
+
+    
+    De este resultado vemos que ninguno de los efectos aleatorios es
+significativo, ya que todos tienen al 0 en el límite inferior del IC.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

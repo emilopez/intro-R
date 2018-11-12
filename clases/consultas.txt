@@ -1,0 +1,15 @@
+1) Del ejercicio de los dentistas, 07.pdf, 
+- El maxHSU, ¿se puede usar con algún efecto aleatorio? 
+- ¿Cómo podemos usar el maxHSU para saber cuál es el mejor y cuáles son equivalentes al mejor, para un modelo que tiene dos factores fijos y uno aleatorio?
+
+2) ¿Cómo usar el EMSaov para dos efectos fijos y uno aleatorio? (vinculado a la pregunta previa, para sacar el MSE necesario en el maxHSU)
+
+3) Del ejercicio 2, de la guía de efectos mixtos, 
+- ¿cómo es la notación del modelo para cuando tenemos efectos anidados?
+- En el modelo utilizado, nosotros excluímos la interacción triple (1|maquinaf:muestraf%in%parcelaf) porque nos parecía innecesaria, pero, ¿es necesario incluirla? ¿hubiese sido correcto de esa manera o como lo hace Edna (1|maquinaf:muestraf:parcelaf)?
+- ¿Qué pasa si en vez de tener parcelas 1,2,3,4... tengo parcela 1,2, 1, 2, 1, 2?
+- ¿Importa el órden en que ponemos los factores aleatorios y su combinación?
+- ¿Cómo usar EMSanova para obtener los cuadrados medios esperados con un fijo y dos aleatorios?
+
+4) Del ejercicio 3 de la guía de efectos mixtos, 
+- si usamos el EMSanova(...) obtenemos resultados que contradicen a lo que llegamos con lmer, ¿cómo lo analizamos?

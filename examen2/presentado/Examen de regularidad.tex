@@ -1,0 +1,948 @@
+\documentclass[11pt]{article}    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Examen de regularidad \\ Estadística aplicada 2018}
+    
+    \author{Alumno: Emiliano P. López \\ Docentes: Diego Tomassi / Antonella Gieco}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+
+
+    \hypertarget{ejercicio-1}{%
+\section*{Ejercicio 1}\label{ejercicio-1}}
+
+\textbf{a) Complete la siguiente tabla ANOVA ingresando los valores de
+los grados de libertad y los cuadrados medios esperados (teóricos).}\\
+
+Se completaron los E(MS) utilizando el modelo con restricciones (como
+los arroja R)
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+\begin{minipage}[b]{0.20\columnwidth}\raggedright
+Fuente de variabilidad\strut
+\end{minipage} & \begin{minipage}[b]{0.26\columnwidth}\raggedright
+Df\strut
+\end{minipage} & \begin{minipage}[b]{0.07\columnwidth}\raggedright
+MS\strut
+\end{minipage} & \begin{minipage}[b]{0.38\columnwidth}\raggedright
+E(MS)\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.20\columnwidth}\raggedright
+T\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright
+(t-1) = (4-1) = 3\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+3.79\strut
+\end{minipage} & \begin{minipage}[t]{0.38\columnwidth}\raggedright
+\(\sigma^2 + r\sigma^2_{T*R(A)}+acr\theta_T^2\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.20\columnwidth}\raggedright
+A\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright
+(a-1) = (3-1) = 2\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+13.27\strut
+\end{minipage} & \begin{minipage}[t]{0.38\columnwidth}\raggedright
+\(\sigma^2 + rt\sigma^2_{R(A)} + tcr\theta_{A}^2\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.20\columnwidth}\raggedright
+T*A\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright
+(t-1)(a-1) = (4-1)(3-1) = 6\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+2.78\strut
+\end{minipage} & \begin{minipage}[t]{0.38\columnwidth}\raggedright
+\(\sigma^2 + r\sigma^2_{TR(A)}+cr\theta_{TA}^2\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.20\columnwidth}\raggedright
+R(A)\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright
+a(c-1) = 3(10-1) = 27\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+2.58\strut
+\end{minipage} & \begin{minipage}[t]{0.38\columnwidth}\raggedright
+\(\sigma^2 + rt\sigma^2_{R(A)}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.20\columnwidth}\raggedright
+T*R(A)\strut
+\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright
+(t-1)a(c-1) = (4-1)3(10-1) = 81\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+1.06\strut
+\end{minipage} & \begin{minipage}[t]{0.38\columnwidth}\raggedright
+\(\sigma^2 + r\sigma^2_{TR(A)}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.20\columnwidth}\raggedright
+Error\strut
+\end{minipage} & \begin{minipage}[t]{0.32\columnwidth}\raggedright
+t\emph{a}c\emph{(r-1) = 4*}3*\emph{10}(2-1) = 120\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright
+0.91\strut
+\end{minipage} & \begin{minipage}[t]{0.38\columnwidth}\raggedright
+\(\sigma^2\)\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Donde,
+
+\begin{itemize}
+\tightlist
+\item
+  t es la cantidad de niveles del factor T (tipos de quesos cheddar)
+\item
+  a es la cantidad de niveles del factor A (grupos de edad)
+\item
+  c es la cantidad de niveles del factor R (profesionales)
+\item
+  r es la cantidad de réplicas
+\end{itemize}
+
+    \textbf{b) Se ajustó el siguiente modelo para los datos donde
+\(Y_{ijkm}\) es la calificación de amargor de la m-ésima porción de
+queso tipo i del k-ésimo evaluador en el grupo de edad j:}\\
+
+\[Y_{ijkm} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + C_{k(j)} + D_{ik(j)} + \epsilon_{ijkm}\]\\
+
+\textbf{Establezca todas las condiciones que se deben asumir sobre los
+términos del modelo para poder llevar a cabo los procedimientos de
+análisis de varianza.}\\
+
+    El modelo previo es de efectos mixtos, esto es, de términos fijos y aleatorios, donde para los efectos aleatorios es de interés estudiar la varianza de dichos efectos mientras que para los fijos es de interés probar la hipótesis directamente sobre sus medias.\\
+
+Las suposiciones sobre el error aleatorio es que sigue una distribución
+normal con media cero y varianza constante, \(N(0, \sigma^2)\), y son
+independientes entre sí. A continuación se detalla cada término del
+modelo:
+
+\begin{itemize}
+\tightlist
+\item 
+  \(\mu\) es la media global
+\item
+  \(\alpha_i\) efecto fijo, \emph{i} niveles para el factor tipos de
+  queso (T)
+\item
+  \(\beta_j\) efecto fijo, \emph{j} niveles para el factor grupos de
+  edad (A)
+\item
+  \((\alpha \beta)_{ij}\) efecto fijo interacción entre T y A
+\item
+  \(C_{k(j)}\) efecto aleatorio, \emph{k} niveles de profesionales (R)
+  anidados a los grupos de edad
+\item
+  \(D_{ik(j)}\), efecto aleatorio interacción entre los tipos de queso y
+  los profesionales anidados a los grupos de edad
+\item
+  \(\epsilon_{ijkl}:\) es el error experimental, con \(l=1 \cdots 120\)
+\end{itemize}
+
+    Los términos \(C_{k(j)}\), \(D_{ik(j)}\) y \(\epsilon_{ijkm}\) son
+variables aleatorias independientes, normales, con media cero y varianzas \(\sigma_{C}^2\), \(\sigma_{\alpha C}^2\) y \(\sigma^2\) respectivamente, por lo tanto, en la varianza total del modelo los factores \(\alpha\) y \(\beta\) no aportan dado que son fijos, pero sí se mantiene el componente de interacción \(D\) por ser \(C\) aleatorio. Esto puede ser escrito del siguiente modo:
+
+\[var(Y_{ijkm}) = \sigma_{C}^2 + \sigma_{\alpha C}^2 + \sigma^2\]
+
+    \textbf{c)}
+
+\begin{itemize}
+\tightlist
+\item
+  H0: \(\beta_j = 0\), para \(j = 1 \cdots a\)
+\item
+  H1: \(\beta_j \ne 0\)
+\end{itemize}
+
+\[ F = { {MSA} \over {MSR(A)} } = { {13.27} \over {2.58} } = {5.1434}\]
+
+Como \(pvalor = 1 - pf(5.1434, 2, 27) = 0.0128 \lt 0.05\), por lo tanto
+rechazamos H0 y concluímos que el efecto de la edad del evaluador es
+significativa.
+
+\clearpage \newpage
+
+    \hypertarget{ejercicio-2}{%
+\section*{Ejercicio 2}\label{ejercicio-2}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{} lectura de datos}
+         datos \PY{o}{=} read.csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{hongos.txt\PYZdq{}}\PY{p}{,} sep \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZbs{}t\PYZdq{}}\PY{p}{)}
+         \PY{k+kp}{head}\PY{p}{(}datos\PY{p}{)}
+         \PY{k+kn}{attach}\PY{p}{(}datos\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|llll}
+ time & humidity & grow.media & growth\\
+\hline
+	 25   & 45   & M1   &  8.1\\
+	 25   & 45   & M1   &  8.9\\
+	 25   & 60   & M1   &  2.2\\
+	 25   & 60   & M1   &  1.1\\
+	 25   & 85   & M1   & 18.6\\
+	 25   & 85   & M1   & 12.3\\
+\end{tabular}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} timef \PY{o}{=} \PY{k+kp}{as.factor}\PY{p}{(}time\PY{p}{)} \PY{c+c1}{\PYZsh{} conversion a factor}
+         humidityf \PY{o}{=} \PY{k+kp}{as.factor}\PY{p}{(}humidity\PY{p}{)}
+         growmediaf \PY{o}{=} \PY{k+kp}{as.factor}\PY{p}{(}grow.media\PY{p}{)}
+\end{Verbatim}
+
+
+    \textbf{a) Escriba un modelo para el análisis de estos datos. Indique el significado de cada parámetro que usa en el contexto del problema,
+valores de los subíndices y todas las suposiciones realizadas.}\\
+
+El modelo es:
+
+\[y_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + (\alpha \beta \gamma)_{ijk} + (\alpha \beta)_{ij} + (\alpha \gamma)_{ik} + (\beta \gamma)_{jk} + \epsilon_{ijkl}\]
+
+A continuación se describen los parámetros del modelo y el rango de los
+índices:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\mu\): es la media global
+\item
+  \(\alpha_i\): es el tiempo, con \(i = 1 \cdots 3\)
+\item
+  \(\beta_j\): es la humedad, con \(j = 1 \cdots 3\)
+\item
+  \(\gamma_k\): es el medio de crecimiento, con \(k = 1 \cdots 2\)
+\item
+  \((\alpha \beta \gamma)_{ijk}\): efecto de la interacción entre el
+  tiempo, humedad y crecimiento
+\item
+  \((\alpha \beta)_{ij}\): efecto de la interacción entre tiempo y
+  humedad
+\item
+  \((\alpha \gamma)_{ik}\): efecto de la interacción entre tiempo y
+  medio de crecimiento
+\item
+  \((\beta \gamma)_{jk}\): efecto de la interacción entre la humedad y
+  medio de crecimiento
+\item
+  \(\epsilon_{ijkl}:\) es el error experimental, con \(l=1 \cdots 36\)
+\end{itemize}
+
+    Las suposiciones del modelo son:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\epsilon_{ijkl} \sim N(0, \sigma^2)\), independientes idénticamente
+  distribuídos
+\end{itemize}
+
+Las restricciones del modelo son:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\alpha_1 = 0\)
+\item
+  \(\beta_1 = 0\)
+\item
+  \(\gamma_1 = 0\)
+\item
+  \((\alpha \beta)_{1j} = 0\)
+\item
+  \((\alpha \beta)_{i1} = 0\)
+\item
+  \((\alpha \gamma)_{1k} = 0\)
+\item
+  \((\alpha \gamma)_{i1} = 0\)
+\item
+  \((\beta \gamma)_{1k} = 0\)
+\item
+  \((\beta \gamma)_{j1} = 0\)
+\item
+  \((\alpha \beta \gamma)_{1jk} = 0\)
+\item
+  \((\alpha \beta \gamma)_{i1k} = 0\)
+\item
+  \((\alpha \beta \gamma)_{ij1} = 0\)
+\end{itemize}
+
+    \textbf{b) Explique por qué decidió incluir (o no) un termino
+correspondiente a la interacción triple entre los tres factores en el
+modelo propuesto.}\\
+
+El objetivo de un diseño factorial es estudiar el efecto de varios factores sobre una o varias respuestas, cuando se tiene el mismo interés sobre todos los factores, como es el caso del ejercicio. De manera que se incluyó un término de interacción triple en el modelo ya que se pretende estudiar tanto los efectos individuales como de las interacciones de varios factores sobre una o varias respuestas.\\
+
+    \textbf{c)¿Que gráficos utilizaría para dar una respuesta exploratoria
+al problema planteado? Explique que precauciones tendría al realizarlo y
+por que.} \\
+
+Debido a que tenemos tres factores fijos que interactúan entre sí, no
+tendría sentido ver el boxplot, ya que la respuesta dependerá de uno o varios factores individuales e interactuando entre sí. Idealmente sería útil analizar gráficos de interacción, dejando fijo uno de los factores y observando la respuesta de la interacción entre los dos restantes. \\
+
+En este caso particular uno podría pensar visualizar la interacción entre la humedad y el tiempo fijando cada medio de cultivo (M1 y M2). Para tener una idea del comportamiento, lo más razonable sería dejar el tiempo en el eje de abscisas y ver para las distintas humedades la correspondiente respuesta (crecimiento del hongo).\\
+
+Debemos tener la precaución en estos gráficos de interacción que las conclusiones no son definitivas, sino que deben comprobarse numéricamente ya que la escala en el eje de respuesta puede darnos una idea falsa de interacción o falta de ella.\\
+
+A continuación observamos uno de los tipos de gráficos de interacción mencionados:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} interaction.plot\PY{p}{(}timef\PY{p}{[}grow.media\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{M1\PYZdq{}}\PY{p}{]}\PY{p}{,} humidityf\PY{p}{[}grow.media\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{M1\PYZdq{}}\PY{p}{]}\PY{p}{,} 
+                          growth\PY{p}{[}grow.media\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{M1\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         interaction.plot\PY{p}{(}timef\PY{p}{[}grow.media\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{M2\PYZdq{}}\PY{p}{]}\PY{p}{,} humidityf\PY{p}{[}grow.media\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{M2\PYZdq{}}\PY{p}{]}\PY{p}{,} 
+                          growth\PY{p}{[}grow.media\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{M2\PYZdq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.6\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.6\linewidth}{0.9\paperheight}}{output_13_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{d) El ajuste del modelo a los datos arrojo la siguiente tabla
+anova\ldots{} En función de estos resultados, escriba un nuevo modelo
+que le parezca adecuado para los datos.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} modelo \PY{o}{=} aov\PY{p}{(}growth\PY{o}{\PYZti{}}timef\PY{o}{*}humidityf\PY{o}{*}growmediaf\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}modelo\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+                           Df Sum Sq Mean Sq F value   Pr(>F)    
+timef                       2   86.3    43.1   5.609  0.01278 *  
+humidityf                   2  540.6   270.3  35.144 6.09e-07 ***
+growmediaf                  1 1009.1  1009.1 131.206 1.06e-09 ***
+timef:humidityf             4   34.9     8.7   1.135  0.37155    
+timef:growmediaf            2  123.8    61.9   8.049  0.00318 ** 
+humidityf:growmediaf        2  132.6    66.3   8.622  0.00236 ** 
+timef:humidityf:growmediaf  4   29.4     7.4   0.957  0.45459    
+Residuals                  18  138.4     7.7                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+    \end{verbatim}
+
+    
+    De la tabla ANOVA previa podemos descartar aquellos factores o
+interacción de factores cuyo \emph{p-valor} sea mayor a la significancia
+\(\alpha = 0.05\), ya que sus efectos no son significativos, de este modo se excluye del modelo los siguientes términos:
+
+\begin{itemize}
+\tightlist
+\item
+  timef:humidityf, (\(\alpha \beta\)), ya que 0.37155 > 0.05
+\item
+  timef:humidityf:growmediaf, (\(\alpha \beta \gamma\)), ya que 0.45459 > 0.05
+\end{itemize}
+
+Finalmente el modelo reducido nos queda:
+
+\[y_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + (\alpha \gamma)_{ik} + (\beta \gamma)_{jk} + \epsilon_{ijkl}\]\
+
+    \textbf{e) A partir del ultimo modelo, ¿que gráficos exploratorios
+podria realizar ahora para estudiar la dependencia entre la respuesta y
+los factores considerados? ¿En que se diferencia esta respuesta de la
+dada en el ítem c)?}\\
+
+Luego de descartar el término de interacción doble
+\texttt{timef:humidityf} y triple \texttt{timef:humidityf:growmediaf}
+realizaría dos gráficos de interacción para los términos cuya
+interacción sea significativa, es decir:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{timef:growmediaf}: dejando fijo la humedad (\(\beta\))
+\item
+  \texttt{humidityf:growmediaf}: dejando fijo el tiempo (\(\alpha\))
+\end{itemize}
+
+En el \emph{item c)}, sin tener conocimiento sobre las interacciones, se
+fijó el \texttt{medio\ de\ crecimiento} y se observaron las
+interacciones entre el tiempo y la humedad, sin embargo ahora vemos que
+este factor interactúa con cada uno de los otros dos factores en forma
+separada, por lo que es relevante analizar su comportamiento sin ser éste el factor fijado.\\
+
+    \textbf{f) Prosiguiendo con su análisis, el investigador obtuvo la
+siguiente tabla:}\\
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} genera tabla del enunciado}
+         contrasts\PY{p}{(}humidityf\PY{p}{)} \PY{o}{=} contr.poly\PY{p}{(}\PY{l+m}{3}\PY{p}{)} 
+         modelo2 \PY{o}{=} lm\PY{p}{(}growth\PY{o}{\PYZti{}}timef\PY{o}{*}humidityf\PY{o}{*}growmediaf \PY{o}{\PYZhy{}} 
+                      \PY{p}{(}timef\PY{o}{:}humidityf\PY{o}{:}growmediaf \PY{o}{+} timef\PY{o}{:}humidityf\PY{p}{)}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}modelo2\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+Call:
+lm(formula = growth ~ timef * humidityf * growmediaf - (timef:humidityf:growmediaf + 
+    timef:humidityf))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.0111 -1.3486 -0.0333  1.1403  6.0722 
+
+Coefficients:
+                         Estimate Std. Error t value Pr(>|t|)    
+(Intercept)               8.53333    1.14018   7.484 6.03e-08 ***
+timef50                  -0.03333    1.61246  -0.021 0.983665    
+timef75                  -0.70000    1.61246  -0.434 0.667782    
+humidityf.L               2.60451    1.14018   2.284 0.030762 *  
+humidityf.Q               5.27321    1.14018   4.625 9.05e-05 ***
+growmediafM2              6.63333    1.61246   4.114 0.000347 ***
+timef50:growmediafM2      2.95000    2.28036   1.294 0.207159    
+timef75:growmediafM2      8.91667    2.28036   3.910 0.000591 ***
+humidityf.L:growmediafM2  5.91613    1.61246   3.669 0.001101 ** 
+humidityf.Q:growmediafM2 -3.03465    1.61246  -1.882 0.071075 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.793 on 26 degrees of freedom
+Multiple R-squared:  0.9032,	Adjusted R-squared:  0.8697 
+F-statistic: 26.96 on 9 and 26 DF,  p-value: 5.566e-11
+
+    \end{verbatim}
+
+\emph{OBSERVACIÓN: La tabla del enunciado contiene un error ya que
+supuso que la humedad se encontraba equispaciada cuando en realidad no
+es así, a continuación se usa la misma tabla para que los resultados sean consistentes a los del enunciado.}\\
+    
+    \textbf{¿A qué análisis corresponde este resumen? Qué representa cada uno de los términos?}\\
+
+La tabla previa se corresponde con un análisis de tendencia para
+estudiar si la variable respuesta se incrementa o decrementa cuando
+varía la \emph{Humedad} usando una estimación lineal o cuadrática. 
+Cuando los niveles de un factor son cuantitativos y presentan un orden
+es interesante realizar un análisis de tendencias a partir de comparaciones múltiples usando contrastes ortogonales.\
+
+Para comprender cuál es la tendencia es necesario observar los
+\emph{p-valores} comparando cada uno con un nuevo \(\alpha_{PC}\) que determine la probabilidad de cometer al menor un error de tipo I para una familia de contrastes ortogonales. Para el cálculo se requiere un valor deseado de \(\alpha_0 = 0.05\) utilizando la siguiente ecuación:
+
+\[\alpha_{PC} = 1 - (1- \alpha_0)^{1/9} = 0.0056\]
+
+De manera que se cumplen aquellas tendencias donde el p-valor < 0.0056.
+En la tabla, los factores o interacciones de factores que terminan en
+\texttt{.Q} (o \texttt{.50} en este caso) refieren a la tendencia cuadrática, mientras que los que finalizan con \texttt{.L} (o \texttt{.75} en este caso) a la lineal.\\
+
+    \textbf{g) En función del reporte presentado en la tabla anterior,
+escriba un modelo genérico (sin el valor de los parámetros) adecuado
+para describir la (superficie de) respuesta del crecimiento de la
+especie de hongo estudiada en función de los factores considerados.}\\
+
+Sea \(x_1\), \(x_2\) y \(x_3\) tiempo, humedad y medio de crecimiento
+respectivamente, y \(\epsilon\) el error aleatorio, según la tabla
+previa el modelo cuadrático genérico tiene la siguiente forma:
+
+\[y = \beta_0 + \beta_1x_1 + \beta_2x_1^2 + \beta_3x_2 + \beta_4x_2^2 + \beta_5x_3 + \beta_6 x_1 x_3 + \beta_7 x_1^2 x_3 + \beta_8 x_2 x_3 + \beta_9 x_2 ^2 x_3 + \epsilon\]
+
+    \textbf{h) Explique como procedería para determinar cual es la
+combinación de factores que mas favorece el crecimiento de hongos.
+¿Encuentra alguna limitación o dificultad en el procedimiento que
+propone?}
+
+Para determinar la mejor combinación de los factores sería conveniente
+realizar comparaciones múltiples usando Dunnet, en este caso previamente
+habría que optimizar para elegir el máximo, para eso es posible usar la
+función \texttt{maxHSU} ya que queremos saber aquellas combinaciones que
+favorecen el crecimiento. Se recomienda que el tamaño de muestra del
+tratamiento control sea grande, a fin de estimar su media con mayor
+precisión.\\
+
+La limitación que podríamos encontrar es que al contar con pocas
+réplicas (2 por hongo) tenemos baja potencia
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k+kn}{source}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{mymultcomp.R\PYZdq{}}\PY{p}{)}
+        fABC \PY{o}{=} \PY{k+kp}{factor}\PY{p}{(}\PY{k+kp}{paste}\PY{p}{(}timef\PY{p}{,}humidityf\PY{p}{,}growmediaf\PY{p}{)}\PY{p}{)}
+        maxHSU\PY{p}{(}growth\PY{p}{,} fABC\PY{p}{,} alpha\PY{o}{=}\PY{l+m}{0.05}\PY{p}{,} mse\PY{o}{=}\PY{l+m}{7.7}\PY{p}{,} dof\PY{o}{=}\PY{l+m}{18}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] "WARNING: esta funcion considera que todos los ni son iguales"
+[1] "50 85 M2"
+[1] "75 85 M2"
+
+    \end{Verbatim}
+
+    \begin{enumerate*}
+\item NA
+\item '50 85 M2'
+\item '75 85 M2'
+\end{enumerate*}\\
+    
+    \textbf{i) Indique cual es el crecimiento medio del hongo que predice el
+modelo si se cultiva en el medio M2 durante 50 horas y con una humedad del 60\%.}\\
+
+A partir de la tabla de medias vemos que para el medio M2, durante 50
+horas a una humedad del 60\%, tenemos una media de 16.95.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k+kn}{library}\PY{p}{(}lsmeans\PY{p}{)}
+        lsmeans\PY{p}{(}modelo\PY{p}{,} \PY{o}{\PYZti{}}timef\PY{o}{*}humidityf\PY{o}{*}growmediaf\PY{p}{)}
+        plot\PY{p}{(}lsmeans\PY{p}{(}modelo\PY{p}{,} \PY{o}{\PYZti{}}timef\PY{o}{*}humidityf\PY{o}{*}growmediaf\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+ timef humidityf growmediaf lsmean       SE df   lower.CL  upper.CL
+ 25    45        M1           8.50 1.961009 18  4.3800734 12.619927
+ 50    45        M1           9.05 1.961009 18  4.9300734 13.169927
+ 75    45        M1           8.25 1.961009 18  4.1300734 12.369927
+ 25    60        M1           1.65 1.961009 18 -2.4699266  5.769927
+ 50    60        M1           6.45 1.961009 18  2.3300734 10.569927
+ 75    60        M1           3.85 1.961009 18 -0.2699266  7.969927
+ 25    85        M1          15.45 1.961009 18 11.3300734 19.569927
+ 50    85        M1          10.00 1.961009 18  5.8800734 14.119927
+ 75    85        M1          11.40 1.961009 18  7.2800734 15.519927
+ 25    45        M2          11.00 1.961009 18  6.8800734 15.119927
+ 50    45        M2          13.00 1.961009 18  8.8800734 17.119927
+ 75    45        M2          17.30 1.961009 18 13.1800734 21.419927
+ 25    60        M2          13.00 1.961009 18  8.8800734 17.119927
+ 50    60        M2          16.95 1.961009 18 12.8300734 21.069927
+ 75    60        M2          21.20 1.961009 18 17.0800734 25.319927
+ 25    85        M2          21.50 1.961009 18 17.3800734 25.619927
+ 50    85        M2          24.30 1.961009 18 20.1800734 28.419927
+ 75    85        M2          31.65 1.961009 18 27.5300734 35.769927
+
+Confidence level used: 0.95 
+    \end{verbatim}
+
+    
+    
+    
+    \begin{center}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{output_25_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{j) Todo el análisis efectuado hasta aquí supuso que las
+mediciones son independientes. ¿Considera que es adecuada esa
+suposición? Justifique su respuesta y, en caso de estar en desacuerdo
+con la metodología empleada, indique que cambios introduciría en el
+procedimiento de análisis (no necesita hacer nada en R).}\\
+
+Para corroborar la suposición de que las mediciones son independientes
+habría que graficar el orden en que se colectó un dato contra el residuo
+correspondiente, de esta manera, si al graficar en el eje horizontal el
+tiempo y en el eje vertical los residuos, se detecta una tendencia o
+patrón no aleatorio claramente definido, esto es evidencia de que existe
+una correlación entre los errores y, por lo tanto, el supuesto de
+independencia no se cumple.\\
+
+Para el caso puntual, sería razonable dudar que los factores sean
+independiente del tiempo, por lo que había que utilizar un modelo
+estadístico que incluya al resto de los factores como función del
+tiempo.
+
+    \hypertarget{ejercicio-3}{%
+\section*{Ejercicio 3}\label{ejercicio-3}}
+
+    \textbf{a)} Opción elegida:
+
+\begin{itemize}
+\tightlist
+\item
+  No se puede calcular con la información provista.
+\end{itemize}
+
+Para calcular el número de réplicas por tratamiento sin tener en cuenta
+los bloques es necesario calcular la potencia iterando para distintos N y detener el ciclo cuando se alcance un valor cercano al buscado. Para esto es necesario calcular el parámetro de no centralidad \(\lambda\) para la distribución F, del siguiente modo:
+
+\[\lambda = {{rD^2} \over {2MSE}} \]\
+
+que a su ver requiere conocer la diferencia \emph{D} , valor no especificado en el enunciado. De todos modos, en este caso podríamos ir variando incrementalmente para graficar la potencia, o
+sea que podríamos salvar este inconveniente, sin embargo, también es
+necesario contar con el MSE del experimento sin bloques, y en este caso
+no es posible suponerlo ni calcularlo con la información provista.\\
+
+\textbf{b)} Opción elegida:
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    0.00205
+  \end{enumerate}
+\end{itemize}
+
+Como las comparaciones son con contrastes ortogonales recalculamos la
+probabilidad de error de tipo I individual haciendo
+\(\alpha_{PC} = (1 - \alpha_F)^{1/N_c}\), donde \(N_c\) es la cantidad
+de contrastes. El cálculo nos arroja:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} alphaF \PY{o}{=} \PY{l+m}{0.05}
+        Nc \PY{o}{=} \PY{l+m}{25}
+        \PY{p}{(}alpha\PYZus{}pc \PY{o}{=} \PY{l+m}{1} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}} alphaF\PY{p}{)}\PY{o}{\PYZca{}}\PY{p}{(}\PY{l+m}{1}\PY{o}{/}Nc\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.0020496284126208\\
+
+    
+    \textbf{c)} Opción elegida:
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    Todas las anteriores.
+  \end{enumerate}
+\end{itemize}
+
+Cuando el tamaño de observaciones es diferente, el estadístico
+\(F = {{MS_{TRT}} \over {MSE}}\) no tiene siempre una distribución F
+exacta como sí lo es en el caso de que el tamaño de muestras sean
+iguales. Para el caso de diferente n deben modificarse la suma de
+cuadrados \(MS\) y por ende se dificulta el cálculo de la \(E(MS)\).
+Respecto a la potencia, esta se maximiza cuando las muestras tienen el
+mismo tamaño.\\
+
+    \textbf{d)} Opción elegida:
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Tukey HSD debería usarse cuando los tratamientos tienen efectos fijos.
+  \end{enumerate}
+\end{itemize}
+
+Tukey es un método para comparar medias de tratamientos y, según el
+enunciado el único factor que existe es aleatorio, por lo que no sería
+razonable utilizarlo.\\
+
+    \textbf{e)} Opción elegida
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \tightlist
+  \item
+    \(L = -3\mu_{11} -1\mu_{21} + 1\mu_{31} + 3\mu_{41} -3\mu_{12} -1\mu_{22} + 1\mu_{32} + 3\mu_{42}\)
+  \end{enumerate}
+\end{itemize}
+
+Los coeficientes para un contraste ortogonal con un polinomio de
+tendencia lineal con 4 niveles en la variable cuantitativa son (-3, -1,
+1, 3), lo que se corresponde para el caso del enunciado donde desea ver
+la tendencia para dos niveles del factor F2. \\
+
+
+    \textbf{f)} Opción elegida:
+
+\begin{itemize}
+\tightlist
+\item
+  (0.8,1.0)
+\end{itemize}
+
+Haciendo el cálculo de la potencia obtenemos un valor de 0.967. A
+continuación el método de cálculo
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} D \PY{o}{=} \PY{l+m}{19} \PY{c+c1}{\PYZsh{} diferencia de medias}
+         b \PY{o}{=} \PY{l+m}{3}  \PY{c+c1}{\PYZsh{} 3 niveles del factor B}
+         a \PY{o}{=} \PY{l+m}{2}  \PY{c+c1}{\PYZsh{} 2 niveles del factor A}
+         r \PY{o}{=} \PY{l+m}{10}
+         n \PY{o}{=} a\PY{o}{*}b\PY{o}{*}r
+         sigma2 \PY{o}{=} \PY{l+m}{100}
+         lambda \PY{o}{=} r\PY{o}{*}D\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}\PY{p}{(}\PY{l+m}{2}\PY{o}{*}sigma2\PY{p}{)}
+         alpha \PY{o}{=} \PY{l+m}{0.05}
+         Q \PY{o}{=} qf\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}alpha\PY{p}{,} \PY{p}{(}a\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{o}{*}\PY{p}{(}b\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{p}{,} n\PY{o}{\PYZhy{}}a\PY{o}{*}b\PY{p}{)}
+         \PY{p}{(}potencia \PY{o}{=} \PY{l+m}{1}\PY{o}{\PYZhy{}}pf\PY{p}{(}Q\PY{p}{,} \PY{p}{(}a\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{o}{*}\PY{p}{(}b\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{p}{,} n\PY{o}{\PYZhy{}}a\PY{o}{*}b\PY{p}{,} lambda\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.967181638979737
+
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
