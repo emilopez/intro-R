@@ -2,7 +2,7 @@
     \usepackage[T1]{fontenc}
     % Nicer default font (+ math font) than Computer Modern for most use cases
     \usepackage{mathpazo}
-
+	\usepackage[spanish]{babel}
     % Basic figure setup, for now with no caption control since it's done
     % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
     \usepackage{graphicx}
@@ -128,7 +128,7 @@
     % Document parameters
     \title{Examen de regularidad \\ Estadística aplicada 2018}
     
-    \author{Alumno: Emiliano P. López \\ Docentes: Diego Tomassi / Antonella Gieco}
+    \author{Alumno: Emiliano P. López \\ \\ Docentes: Diego Tomassi - Antonella Gieco}
     
     
     
@@ -264,11 +264,11 @@
     
     \maketitle
     
-    
+    \tableofcontents
 
     
 
-
+\addcontentsline{toc}{section}{Ejercicio 1}
     \hypertarget{ejercicio-1}{%
 \section*{Ejercicio 1}\label{ejercicio-1}}
 
@@ -423,7 +423,7 @@ rechazamos H0 y concluímos que el efecto de la edad del evaluador es
 significativa.
 
 \clearpage \newpage
-
+\addcontentsline{toc}{section}{Ejercicio 2}
     \hypertarget{ejercicio-2}{%
 \section*{Ejercicio 2}\label{ejercicio-2}}
 
@@ -710,7 +710,7 @@ previa el modelo cuadrático genérico tiene la siguiente forma:
     \textbf{h) Explique como procedería para determinar cual es la
 combinación de factores que mas favorece el crecimiento de hongos.
 ¿Encuentra alguna limitación o dificultad en el procedimiento que
-propone?}
+propone?}\\
 
 Para determinar la mejor combinación de los factores sería conveniente
 realizar comparaciones múltiples usando Dunnet, en este caso previamente
@@ -729,12 +729,10 @@ réplicas (2 por hongo) tenemos baja potencia
         maxHSU\PY{p}{(}growth\PY{p}{,} fABC\PY{p}{,} alpha\PY{o}{=}\PY{l+m}{0.05}\PY{p}{,} mse\PY{o}{=}\PY{l+m}{7.7}\PY{p}{,} dof\PY{o}{=}\PY{l+m}{18}\PY{p}{)}
 \end{Verbatim}
 
-
     \begin{Verbatim}[commandchars=\\\{\}]
 [1] "WARNING: esta funcion considera que todos los ni son iguales"
 [1] "50 85 M2"
 [1] "75 85 M2"
-
     \end{Verbatim}
 
     \begin{enumerate*}
@@ -776,7 +774,6 @@ horas a una humedad del 60\%, tenemos una media de 16.95.
  25    85        M2          21.50 1.961009 18 17.3800734 25.619927
  50    85        M2          24.30 1.961009 18 20.1800734 28.419927
  75    85        M2          31.65 1.961009 18 27.5300734 35.769927
-
 Confidence level used: 0.95 
     \end{verbatim}
 
@@ -784,7 +781,7 @@ Confidence level used: 0.95
     
     
     \begin{center}
-    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{output_25_3.png}
+    \adjustimage{max size={0.7\linewidth}{0.9\paperheight}}{output_25_3.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -807,6 +804,8 @@ independiente del tiempo, por lo que había que utilizar un modelo
 estadístico que incluya al resto de los factores como función del
 tiempo.
 
+\clearpage \newpage
+\addcontentsline{toc}{section}{Ejercicio 3}
     \hypertarget{ejercicio-3}{%
 \section*{Ejercicio 3}\label{ejercicio-3}}
 
