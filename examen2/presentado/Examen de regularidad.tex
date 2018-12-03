@@ -404,9 +404,11 @@ modelo:
     Los términos \(C_{k(j)}\), \(D_{ik(j)}\) y \(\epsilon_{ijkm}\) son
 variables aleatorias independientes, normales, con media cero y varianzas \(\sigma_{C}^2\), \(\sigma_{\alpha C}^2\) y \(\sigma^2\) respectivamente, por lo tanto, en la varianza total del modelo los factores \(\alpha\) y \(\beta\) no aportan dado que son fijos, pero sí se mantiene el componente de interacción \(D\) por ser \(C\) aleatorio. Esto puede ser escrito del siguiente modo:
 
-\[var(Y_{ijkm}) = \sigma_{C}^2 + \sigma_{\alpha C}^2 + \sigma^2\]
+\[var(Y_{ijkm}) = \sigma_{C}^2 + \sigma_{\alpha C}^2 + \sigma^2\]\
 
-    \textbf{c)}
+    \textbf{c) A nivel α = 0.05, evalúe el efecto de la Edad del evaluador en el promedio de la clasificación de
+amargor del queso. Tenga en cuenta que los números que figuran en la tabla de ANOVA son los
+cuadrados medios (MS) NO la suma de cuadrados (SS).}
 
 \begin{itemize}
 \tightlist
@@ -420,7 +422,7 @@ variables aleatorias independientes, normales, con media cero y varianzas \(\sig
 
 Como \(pvalor = 1 - pf(5.1434, 2, 27) = 0.0128 \lt 0.05\), por lo tanto
 rechazamos H0 y concluímos que el efecto de la edad del evaluador es
-significativa.
+significativa.\\
 
 \clearpage \newpage
 \addcontentsline{toc}{section}{Ejercicio 2}
@@ -565,9 +567,7 @@ A continuación observamos uno de los tipos de gráficos de interacción mencion
     \end{center}
     { \hspace*{\fill} \\}
     
-    \textbf{d) El ajuste del modelo a los datos arrojo la siguiente tabla
-anova\ldots{} En función de estos resultados, escriba un nuevo modelo
-que le parezca adecuado para los datos.}
+    \textbf{d) El ajuste del modelo a los datos arrojo la siguiente tabla anova\ldots{} En función de estos resultados, escriba un nuevo modelo que le parezca adecuado para los datos.}
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}14}]:} modelo \PY{o}{=} aov\PY{p}{(}growth\PY{o}{\PYZti{}}timef\PY{o}{*}humidityf\PY{o}{*}growmediaf\PY{p}{)}
@@ -607,15 +607,9 @@ Finalmente el modelo reducido nos queda:
 
 \[y_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + (\alpha \gamma)_{ik} + (\beta \gamma)_{jk} + \epsilon_{ijkl}\]\
 
-    \textbf{e) A partir del ultimo modelo, ¿que gráficos exploratorios
-podria realizar ahora para estudiar la dependencia entre la respuesta y
-los factores considerados? ¿En que se diferencia esta respuesta de la
-dada en el ítem c)?}\\
+    \textbf{e) A partir del ultimo modelo, ¿que gráficos exploratorios podría realizar ahora para estudiar la dependencia entre la respuesta y los factores considerados? ¿En que se diferencia esta respuesta de la dada en el ítem c)?}\\
 
-Luego de descartar el término de interacción doble
-\texttt{timef:humidityf} y triple \texttt{timef:humidityf:growmediaf}
-realizaría dos gráficos de interacción para los términos cuya
-interacción sea significativa, es decir:
+Luego de descartar el término de interacción doble \texttt{timef:humidityf} y triple \texttt{timef:humidityf:growmediaf} realizaría dos gráficos de interacción para los términos cuya interacción sea significativa, es decir:
 
 \begin{itemize}
 \tightlist
@@ -625,14 +619,9 @@ interacción sea significativa, es decir:
   \texttt{humidityf:growmediaf}: dejando fijo el tiempo (\(\alpha\))
 \end{itemize}
 
-En el \emph{item c)}, sin tener conocimiento sobre las interacciones, se
-fijó el \texttt{medio\ de\ crecimiento} y se observaron las
-interacciones entre el tiempo y la humedad, sin embargo ahora vemos que
-este factor interactúa con cada uno de los otros dos factores en forma
-separada, por lo que es relevante analizar su comportamiento sin ser éste el factor fijado.\\
+En el \emph{item c)}, sin tener conocimiento sobre las interacciones, se fijó el \texttt{medio\ de\ crecimiento} y se observaron las interacciones entre el tiempo y la humedad, sin embargo ahora vemos que este factor interactúa con cada uno de los otros dos factores en forma separada, por lo que es relevante analizar su comportamiento sin ser éste el factor fijado.\\
 
-    \textbf{f) Prosiguiendo con su análisis, el investigador obtuvo la
-siguiente tabla:}\\
+    \textbf{f) Prosiguiendo con su análisis, el investigador obtuvo la siguiente tabla:}\\
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} genera tabla del enunciado}
@@ -642,10 +631,8 @@ siguiente tabla:}\\
          \PY{k+kp}{summary}\PY{p}{(}modelo2\PY{p}{)}
 \end{Verbatim}
 
-
     
     \begin{verbatim}
-
 Call:
 lm(formula = growth ~ timef * humidityf * growmediaf - (timef:humidityf:growmediaf + 
     timef:humidityf))
@@ -679,13 +666,10 @@ F-statistic: 26.96 on 9 and 26 DF,  p-value: 5.566e-11
 supuso que la humedad se encontraba equispaciada cuando en realidad no
 es así, a continuación se usa la misma tabla para que los resultados sean consistentes a los del enunciado.}\\
     
-    \textbf{¿A qué análisis corresponde este resumen? Qué representa cada uno de los términos?}\\
+\textbf{¿A qué análisis corresponde este resumen? Qué representa cada uno de los términos?}\\
 
-La tabla previa se corresponde con un análisis de tendencia para
-estudiar si la variable respuesta se incrementa o decrementa cuando
-varía la \emph{Humedad} usando una estimación lineal o cuadrática. 
-Cuando los niveles de un factor son cuantitativos y presentan un orden
-es interesante realizar un análisis de tendencias a partir de comparaciones múltiples usando contrastes ortogonales.\
+La tabla previa se corresponde con un análisis de tendencia para estudiar si la variable respuesta se incrementa o decrementa cuando varía la \emph{Humedad} usando una estimación lineal o cuadrática. 
+Cuando los niveles de un factor son cuantitativos y presentan un orden es interesante realizar un análisis de tendencias a partir de comparaciones múltiples usando contrastes ortogonales.\\
 
 Para comprender cuál es la tendencia es necesario observar los
 \emph{p-valores} comparando cada uno con un nuevo \(\alpha_{PC}\) que determine la probabilidad de cometer al menor un error de tipo I para una familia de contrastes ortogonales. Para el cálculo se requiere un valor deseado de \(\alpha_0 = 0.05\) utilizando la siguiente ecuación:
@@ -721,7 +705,7 @@ tratamiento control sea grande, a fin de estimar su media con mayor
 precisión.\\
 
 La limitación que podríamos encontrar es que al contar con pocas
-réplicas (2 por hongo) tenemos baja potencia
+réplicas (2 por hongo) tenemos baja potencia.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}7}]:} \PY{k+kn}{source}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{mymultcomp.R\PYZdq{}}\PY{p}{)}
@@ -741,7 +725,7 @@ réplicas (2 por hongo) tenemos baja potencia
 \item '75 85 M2'
 \end{enumerate*}\\
     
-    \textbf{i) Indique cual es el crecimiento medio del hongo que predice el
+    \textbf{i) Indique cuál es el crecimiento medio del hongo que predice el
 modelo si se cultiva en el medio M2 durante 50 horas y con una humedad del 60\%.}\\
 
 A partir de la tabla de medias vemos que para el medio M2, durante 50
@@ -799,10 +783,7 @@ patrón no aleatorio claramente definido, esto es evidencia de que existe
 una correlación entre los errores y, por lo tanto, el supuesto de
 independencia no se cumple.\\
 
-Para el caso puntual, sería razonable dudar que los factores sean
-independiente del tiempo, por lo que había que utilizar un modelo
-estadístico que incluya al resto de los factores como función del
-tiempo.
+Para el caso puntual, sería razonable dudar que los factores no sean independiente del tiempo, por lo que había que utilizar un modelo estadístico que incluya al resto de los factores como función del tiempo.
 
 \clearpage \newpage
 \addcontentsline{toc}{section}{Ejercicio 3}
@@ -814,7 +795,7 @@ tiempo.
 \begin{itemize}
 \tightlist
 \item
-  No se puede calcular con la información provista.
+  5) No se puede calcular con la información provista. 
 \end{itemize}
 
 Para calcular el número de réplicas por tratamiento sin tener en cuenta
