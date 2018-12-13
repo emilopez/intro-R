@@ -1,5 +1,7 @@
-datos = read.csv("datos/hidrometro/ceneha-cada12hs.csv", sep = ";")
-str(datos)
+rm(list=ls())
+datos = read.csv("hidrometro/ceneha.csv", sep = ";")
+names(datos)
 attach(datos)
 
-plot(Altura)
+plot(altura[0:100]~fechayhora[0:100])
+
