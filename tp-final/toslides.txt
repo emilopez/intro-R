@@ -1,0 +1,1 @@
+jupyter nbconvert tf.ipynb --to slides --post serve
